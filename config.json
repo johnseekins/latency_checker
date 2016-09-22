@@ -1,0 +1,58 @@
+{
+        "sites": [{
+                "uri": "ec2.us-east-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 us-east-1"
+        }, {
+                "uri": "ec2.us-west-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 us-west-1"
+        }, {
+                "uri": "ec2.us-west-2.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 us-west-2"
+        }, {
+                "uri": "ec2.ap-south-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 ap-south-1"
+        }, {
+                "uri": "ec2.ap-northeast-2.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 ap-northeast-2"
+        }, {
+                "uri": "ec2.ap-southeast-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 ap-southeast-1"
+        }, {
+                "uri": "ec2.ap-southeast-2.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 ap-southeast-2"
+        }, {
+                "uri": "ec2.ap-northeast-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 ap-northeast-1"
+        }, {
+                "uri": "ec2.eu-central-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 eu-central-1"
+        }, {
+                "uri": "ec2.eu-west-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 eu-west-1"
+        }, {
+                "uri": "ec2.sa-east-1.amazonaws.com",
+                "protocol": "https://",
+                "name": "ec2 sa-east-1"
+        }, {
+                "uri": "yahoo.com",
+                "protocol": "https://",
+                "name": "Yahoo"
+        }, {
+                "uri": "duckduckgo.com",
+                "protocol": "https://",
+                "name": "DuckDuckGo"
+        }],
+        "server": "localhost",
+        "port": 2003
+}
+
