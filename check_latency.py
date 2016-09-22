@@ -50,8 +50,9 @@ for endpoint, value in avgs.iteritems():
                                                           value, t)
     send_string += tmp_string
 
-sock = socket.socket()
-sock.connect((config['server'], config['port']))
-sock.sendall(send_string)
-sock.close()
+if all(k in config for k in ['server', 'port']):
+    sock = socket.socket()
+    sock.connect((config['server'], config['port']))
+    sock.sendall(send_string)
+    sock.close()
 
