@@ -35,7 +35,8 @@ avgs = {}
 for i in xrange(3):
     print("Round %d" % (i + 1))
     if RANDOM:
-        p = Pool(randrange(num_sites))
+        # avoid picking '0'
+        p = Pool(randrange(num_sites) + 1)
     else:
         p = Pool(cpu_count())
     cur_lat = p.map(check_site, config['sites'])
