@@ -53,6 +53,7 @@
                 "name": "DuckDuckGo"
         }],
         "server": "localhost",
-        "port": 2003
+        "port": 2003,
+	"random": true
 }
 

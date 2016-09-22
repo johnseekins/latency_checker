@@ -20,8 +20,15 @@ def check_site(sitedict):
     # milliseconds
     return (site.replace('.', '_'), r.elapsed.total_seconds() * 1000)
 
-with open('config.json', 'r') as f_in:
-    config = load(f_in)
+try:
+    with open('config.json', 'r') as f_in:
+        config = load(f_in)
+except Exception, e:
+    print("Couldn't load config :: %s" % e)
+    exit(1)
+
+if 'random' in config:
+    RANDOM = config['random']
 
 num_sites = len(config['sites'])
 avgs = {}
