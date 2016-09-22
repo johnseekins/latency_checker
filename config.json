@@ -32,6 +32,10 @@
                 "protocol": "https://",
                 "name": "ec2 ap-northeast-1"
         }, {
+                "uri": "google.com",
+                "protocol": "https://",
+                "name": "Google"
+        }, {
                 "uri": "ec2.eu-central-1.amazonaws.com",
                 "protocol": "https://",
                 "name": "ec2 eu-central-1"
