@@ -18,7 +18,7 @@ def check_site(sitedict):
     if r.status_code != 200:
         print("Failed to get %s correctly" % name)
     # milliseconds
-    return (site.replace('.', '_'), r.elapsed.total_seconds() * 1000)
+    return (uri.replace('.', '_'), r.elapsed.total_seconds() * 1000)
 
 try:
     with open('config.json', 'r') as f_in:
