@@ -6,7 +6,16 @@ from time import time, sleep
 from platform import node
 from multiprocessing import Pool, cpu_count
 from random import randrange
+import argparse
 RANDOM = True
+
+
+def opts():
+    args = argparse.ArgumentParser("Options for Latency Checker")
+    args.add_argument("-c", "--config", help="JSON config file",
+                      required=True, dest="config")
+    return args.parse_args()
+
 
 def check_site(sitedict):
     name = sitedict['name']
@@ -18,10 +27,13 @@ def check_site(sitedict):
     if r.status_code != 200:
         print("Failed to get %s correctly" % name)
     # milliseconds
-    return (uri.replace('.', '_'), r.elapsed.total_seconds() * 1000)
+    uri = uri.replace('.', '_')
+    uri = uri.replace('/', '_')
+    return (uri, r.elapsed.total_seconds() * 1000)
 
+args = opts()
 try:
-    with open('/opt/config.json', 'r') as f_in:
+    with open(args.config, 'r') as f_in:
         config = load(f_in)
 except Exception, e:
     print("Couldn't load config :: %s" % e)

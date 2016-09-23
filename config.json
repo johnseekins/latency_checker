@@ -20,6 +20,10 @@
                 "protocol": "https://",
                 "name": "ec2 ap-northeast-2"
         }, {
+                "uri": "www.bing.com/images/explore",
+                "protocol": "https://",
+                "name": "Bing Image Search"
+        }, {
                 "uri": "ec2.ap-southeast-1.amazonaws.com",
                 "protocol": "https://",
                 "name": "ec2 ap-southeast-1"
