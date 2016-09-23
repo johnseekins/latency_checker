@@ -52,7 +52,7 @@ print("Avg. Latencies: %s" % avgs)
 
 send_string = ""
 t = time()
-host = node()
+host = config.get("hostname", node())
 for endpoint, value in avgs.iteritems():
     tmp_string = "endpoints.%s.%s.response-ms %d %d\n" % (host, endpoint,
                                                           value, t)
