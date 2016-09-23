@@ -7,7 +7,7 @@ from platform import node
 from multiprocessing import Pool, cpu_count
 from random import randrange
 import argparse
-RANDOM = True
+TIMEOUT = 10
 
 
 def opts():
@@ -23,7 +23,7 @@ def check_site(sitedict):
     uri = sitedict['uri']
     site = "%s%s" % (protocol, uri)
     print("Checking %s" % name)
-    r = requests.get(site)
+    r = requests.get(site, timeout=10)
     if r.status_code != 200:
         print("Failed to get %s correctly" % name)
     # milliseconds
@@ -39,8 +39,8 @@ except Exception, e:
     print("Couldn't load config :: %s" % e)
     exit(1)
 
-if 'random' in config:
-    RANDOM = config['random']
+TIMEOUT = config.get('timeout', 10)
+RANDOM = config.get('random', True)
 
 num_sites = len(config['sites'])
 avgs = {}

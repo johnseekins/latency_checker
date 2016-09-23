@@ -65,6 +65,7 @@
                 "name": "DuckDuckGo"
         }],
         "server": "localhost",
+	"timeout": 10,
         "port": 2003,
 	"random": true
 }
