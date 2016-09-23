@@ -16,6 +16,10 @@
                 "protocol": "https://",
                 "name": "ec2 ap-south-1"
         }, {
+                "uri": "duckduckgo-owned-server.yahoo.net",
+                "protocol": "https://",
+                "name": "DuckDuckGo/Yahoo Servers"
+        }, {
                 "uri": "ec2.ap-northeast-2.amazonaws.com",
                 "protocol": "https://",
                 "name": "ec2 ap-northeast-2"
