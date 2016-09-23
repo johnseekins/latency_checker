@@ -21,7 +21,7 @@ def check_site(sitedict):
     return (uri.replace('.', '_'), r.elapsed.total_seconds() * 1000)
 
 try:
-    with open('config.json', 'r') as f_in:
+    with open('/opt/config.json', 'r') as f_in:
         config = load(f_in)
 except Exception, e:
     print("Couldn't load config :: %s" % e)
