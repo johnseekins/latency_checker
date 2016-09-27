@@ -67,6 +67,8 @@
         "server": "localhost",
 	"timeout": 10,
         "port": 2003,
+	"debug": false,
+	"prefix": "endpoints",
 	"random": true
 }
 

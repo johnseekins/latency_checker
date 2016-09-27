@@ -8,12 +8,16 @@ from multiprocessing import Pool, cpu_count
 from random import randrange
 import argparse
 TIMEOUT = 10
-
+RANDOM = True
+DEBUG = False
+PREFIX = "endpoints"
 
 def opts():
     args = argparse.ArgumentParser("Options for Latency Checker")
     args.add_argument("-c", "--config", help="JSON config file",
                       required=True, dest="config")
+    args.add_argument("-d", "--debug", help="Debug Info",
+                      default=False, dest="debug")
     return args.parse_args()
 
 
@@ -22,9 +26,10 @@ def check_site(sitedict):
     protocol = sitedict['protocol']
     uri = sitedict['uri']
     site = "%s%s" % (protocol, uri)
-    print("Checking %s" % name)
+    if DEBUG:
+        print("Checking %s" % name)
     try:
-        r = requests.get(site, timeout=10)
+        r = requests.get(site, timeout=TIMEOUT)
     except Exception, e:
         print("Connection to %s failed :: %s" % (name, e))
         return (uri, -1, False)
@@ -46,11 +51,16 @@ except Exception, e:
 
 TIMEOUT = config.get('timeout', 10)
 RANDOM = config.get('random', True)
+DEBUG = config.get('debug', False)
+PREFIX = config.get('prefix', 'endpoints')
+if args.debug:
+    DEBUG = True
 
 num_sites = len(config['sites'])
 avgs = {}
 for i in xrange(3):
-    print("Round %d" % (i + 1))
+    if DEBUG:
+        print("Round %d" % (i + 1))
     if RANDOM:
         # avoid picking '0'
         p = Pool(randrange(num_sites) + 1)
@@ -66,24 +76,32 @@ for i in xrange(3):
             if exists:
                 val = (avgs[name][0] + val) / 2
             avgs[name] = (val, True)
-    print("Current latency stats: %s" % avgs)
-    print("Taking a quick break...")
+    if DEBUG:
+        print("Current latency stats: %s" % avgs)
+        print("Taking a quick break...")
     sleep(num_sites / 2)
 
-print("Avg. Latencies: %s" % avgs)
+print("\nAvg. Latencies: %s" % avgs)
 
 send_string = ""
 t = time()
 host = config.get("hostname", node())
+avg = 0
+count = 0
 for endpoint, value in avgs.iteritems():
     val, worked = value
     if worked:
-        tmp_string = "endpoints.%s.%s.response-ms %d %d\n" % (host, endpoint,
-                                                              val, t)
+        tmp_string = "%s.%s.%s.response-ms %d %d\n" % (PREFIX, host,
+                                                       endpoint, val, t)
         send_string += tmp_string
+        count += 1
+        avg += val
     else:
         print("Skipping %s because it failed" % endpoint)
 
+if send_string:
+    avg = avg / count
+    send_string += "%s.%s.avg_latency %d %d" % (PREFIX, host, avg, t)
 
 if all(k in config for k in ['server', 'port']) and send_string:
     print("Sending to metrics endpoint")
