@@ -74,7 +74,7 @@ for i in xrange(3):
             avgs[name] = (-1, False)
         else:
             if exists:
-                val = (avgs[name][0] + val) / 2
+                val = float((avgs[name][0] + val) / 2)
             avgs[name] = (val, True)
     if DEBUG:
         print("Current latency stats: %s" % avgs)
@@ -104,7 +104,8 @@ if send_string:
 print("Collected:\n%s" % send_string)
 
 if all(k in config for k in ['server', 'port']) and send_string:
-    print("Sending to metrics endpoint")
+    print("Sending to metrics endpoint %s::%s" % (config['server'],
+                                                  config['port']))
     sock = socket.socket()
     sock.connect((config['server'], config['port']))
     sock.sendall(send_string)
