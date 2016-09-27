@@ -99,9 +99,9 @@ for endpoint, value in avgs.iteritems():
 
 if send_string:
     avg = avg / count
-    send_string += "%s.%s.avg_latency %d %d" % (PREFIX, host, avg, t)
+    send_string += "%s.%s.avg_latency %d %d\n" % (PREFIX, host, avg, t)
 
-print("Collected:\n %s" % send_string)
+print("Collected:\n%s" % send_string)
 
 if all(k in config for k in ['server', 'port']) and send_string:
     print("Sending to metrics endpoint")
