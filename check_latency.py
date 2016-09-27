@@ -81,8 +81,6 @@ for i in xrange(3):
         print("Taking a quick break...")
     sleep(num_sites / 2)
 
-print("\nAvg. Latencies: %s" % avgs)
-
 send_string = ""
 t = time()
 host = config.get("hostname", node())
@@ -102,6 +100,8 @@ for endpoint, value in avgs.iteritems():
 if send_string:
     avg = avg / count
     send_string += "%s.%s.avg_latency %d %d" % (PREFIX, host, avg, t)
+
+print("Collected:\n %s" % send_string)
 
 if all(k in config for k in ['server', 'port']) and send_string:
     print("Sending to metrics endpoint")
