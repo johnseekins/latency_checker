@@ -98,7 +98,7 @@ for endpoint, value in avgs.iteritems():
         print("Skipping %s because it failed" % endpoint)
 
 if send_string:
-    avg = avg / count
+    avg = float(avg / count)
     send_string += "%s.%s.avg_latency-ms %d %d\n" % (PREFIX, host, avg, t)
 
 print("Collected:\n%s" % send_string)
