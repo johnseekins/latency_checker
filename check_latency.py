@@ -64,9 +64,9 @@ for i in xrange(3):
             avgs[name] = (-1, False)
         else:
             if exists:
-                avgs[lat[0]][0] = (avgs[lat[0]] + lat[1]) / 2
-            else:
-                avgs[lat[0]] = (lat[1], True)
+                val = (avgs[name][0] + val) / 2
+            avgs[name] = (val, True)
+    print("Current latency stats: %s" % avgs)
     print("Taking a quick break...")
     sleep(num_sites / 2)
 
@@ -81,8 +81,12 @@ for endpoint, value in avgs.iteritems():
         tmp_string = "endpoints.%s.%s.response-ms %d %d\n" % (host, endpoint,
                                                               val, t)
         send_string += tmp_string
+    else:
+        print("Skipping %s because it failed" % endpoint)
+
 
 if all(k in config for k in ['server', 'port']) and send_string:
+    print("Sending to metrics endpoint")
     sock = socket.socket()
     sock.connect((config['server'], config['port']))
     sock.sendall(send_string)
