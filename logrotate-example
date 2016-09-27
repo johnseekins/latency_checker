@@ -1,6 +1,6 @@
 /tmp/check-latency.log {
         daily
-        rotate 7
+        rotate 3
         copytruncate
         compress
         missingok

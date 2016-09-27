@@ -23,13 +23,18 @@ def check_site(sitedict):
     uri = sitedict['uri']
     site = "%s%s" % (protocol, uri)
     print("Checking %s" % name)
-    r = requests.get(site, timeout=10)
+    try:
+        r = requests.get(site, timeout=10)
+    except Exception, e:
+        print("Connection to %s failed :: %s" % (name, e))
+        return (uri, -1, False)
     if r.status_code != 200:
-        print("Failed to get %s correctly" % name)
+        print("Host: %s :: Status: %s" % (name, r.status_code))
+        return (uri, -1, False)
     # milliseconds
     uri = uri.replace('.', '_')
     uri = uri.replace('/', '_')
-    return (uri, r.elapsed.total_seconds() * 1000)
+    return (uri, r.elapsed.total_seconds() * 1000, True)
 
 args = opts()
 try:
@@ -53,10 +58,15 @@ for i in xrange(3):
         p = Pool(cpu_count())
     cur_lat = p.map(check_site, config['sites'])
     for lat in cur_lat:
-        if lat[0] in avgs:
-           avgs[lat[0]] = (avgs[lat[0]] + lat[1]) / 2
+        name, val, worked = lat
+        exists = avgs.get(name, False)
+        if not worked:
+            avgs[name] = (-1, False)
         else:
-           avgs[lat[0]] = lat[1]
+            if exists:
+                avgs[lat[0]][0] = (avgs[lat[0]] + lat[1]) / 2
+            else:
+                avgs[lat[0]] = (lat[1], True)
     print("Taking a quick break...")
     sleep(num_sites / 2)
 
@@ -66,11 +76,13 @@ send_string = ""
 t = time()
 host = config.get("hostname", node())
 for endpoint, value in avgs.iteritems():
-    tmp_string = "endpoints.%s.%s.response-ms %d %d\n" % (host, endpoint,
-                                                          value, t)
-    send_string += tmp_string
+    val, worked = value
+    if worked:
+        tmp_string = "endpoints.%s.%s.response-ms %d %d\n" % (host, endpoint,
+                                                              val, t)
+        send_string += tmp_string
 
-if all(k in config for k in ['server', 'port']):
+if all(k in config for k in ['server', 'port']) and send_string:
     sock = socket.socket()
     sock.connect((config['server'], config['port']))
     sock.sendall(send_string)
