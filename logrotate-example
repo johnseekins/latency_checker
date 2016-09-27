@@ -1,0 +1,9 @@
+/tmp/check-latency.log {
+        daily
+        rotate 7
+        copytruncate
+        compress
+        missingok
+        notifempty
+        maxsize 50M
+}

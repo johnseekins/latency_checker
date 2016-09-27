@@ -1,1 +1,1 @@
-*/5 * * * * root python /opt/check_latency.py -c /opt/config.json > /tmp/check-latency.log 2>&1
+*/5 * * * * root date >> /tmp/check-latency.log; python /opt/check_latency.py -c /opt/config.json >> /tmp/check-latency.log 2>&1
