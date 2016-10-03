@@ -84,6 +84,8 @@ for k, v in high_avg.iteritems():
         r = r.json()
         datapoints = [d for d in r[0]['datapoints'] if d[0]]
         lat = float(sum([d[0] for d in datapoints]) / len(datapoints))
+        if lat > 300:
+            print("***HIGH LATENCY***")
         pp.pprint({"Name": i, "Avg. Latency": lat})
     s = [i for i in v['slow_endpoints'] if i not in m['slow_endpoints']]
     if not s:
@@ -95,6 +97,8 @@ for k, v in high_avg.iteritems():
         r = r.json()
         datapoints = [d for d in r[0]['datapoints'] if d[0]]
         lat = float(sum([d[0] for d in datapoints]) / len(datapoints))
+        if lat > 300:
+            print("***HIGH LATENCY***")
         pp.pprint({"Name": name, "Avg. Latency": lat})
 
 print("\nConnections that are solid, but have some spikes:")
